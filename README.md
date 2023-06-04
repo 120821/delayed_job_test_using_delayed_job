@@ -1,26 +1,31 @@
-# README
+# delayed_job
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### 简单使用
 
-Things you may want to cover:
+1.修改Gemfile
 
-* Ruby version
+```
+gem 'delayed_job_active_record'
+```
 
-* System dependencies
+2.创建作业表
 
-* Configuration
+```
+rails generate delayed_job:active_record
+rake db:migrate
+```
 
-* Database creation
+3.修改config/application.rb
 
-* Database initialization
+在 Rails 4.2+ 中，在 config/application.rb 中设置queue_adapter
 
-* How to run the test suite
+```
+config.active_job.queue_adapter = :delayed_job
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+4.查看bin文件夹
+```
+ls bin/
+bundle  delayed_job  importmap  rails  rake  setup
 
-* Deployment instructions
-
-* ...
-# delayed_job_test
-# delayed_job_test_using_delayed_job
+```

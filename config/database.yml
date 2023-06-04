@@ -10,12 +10,12 @@ default: &default
 
 development:
   <<: *default
-  database: delayed_job
+  database: delayed_job_new
 
 test:
   <<: *default
-  database: delayed_job_test
+  database: delayed_job_new_test
 
 production:
   <<: *default
-  database: delayed_job
+  database: delayed_job_new
