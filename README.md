@@ -165,3 +165,30 @@ app  config     db                     delayed_job_demo.txt  Gemfile       lib  
 bin  config.ru  delayed_job_demo2.txt  dump.rdb              Gemfile.lock  log  Rakefile  README.md  storage  tmp
 ```
 所以启动`RAILS_ENV=production bin/delayed_job start`命令后，再次增加任务，可以不用再次start.
+
+
+脚本/delayed_job可用于管理将开始处理作业的后台进程。
+为此，请将 gem “守护进程”添加到您的 Gemfile 中，并确保您已运行 rails 生成delayed_job。
+然后，您可以执行以下操作：
+```
+RAILS_ENV=production script/delayed_job start
+RAILS_ENV=production script/delayed_job stop
+
+# Runs two workers in separate processes.
+RAILS_ENV=production script/delayed_job -n 2 start
+RAILS_ENV=production script/delayed_job stop
+
+# Set the --queue or --queues option to work from a particular queue.
+RAILS_ENV=production script/delayed_job --queue=tracking start
+RAILS_ENV=production script/delayed_job --queues=mailers,tasks start
+
+# Use the --pool option to specify a worker pool. You can use this option multiple times to start different numbers of workers for different queues.
+# The following command will start 1 worker for the tracking queue,
+# 2 workers for the mailers and tasks queues, and 2 workers for any jobs:
+RAILS_ENV=production script/delayed_job --pool=tracking --pool=mailers,tasks:2 --pool=*:2 start
+
+# Runs all available jobs and then exits
+RAILS_ENV=production script/delayed_job start --exit-on-complete
+# or to run in the foreground
+RAILS_ENV=production script/delayed_job run --exit-on-complete
+```
